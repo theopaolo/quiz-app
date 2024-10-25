@@ -1,3 +1,24 @@
+type QuestionType = 'multiple-choice' | 'feedback';
+
+interface BaseQuestion {
+  type: QuestionType;
+  question: string;
+}
+
+interface MultipleChoiceQuestion extends BaseQuestion {
+  type: 'multiple-choice';
+  answers: Array<{
+    text: string;
+    isCorrect: boolean;
+  }>;
+}
+
+interface FeedbackQuestion extends BaseQuestion {
+  type: 'feedback';
+  minLength?: number; // Longueur minimale optionnelle
+}
+
+type Question = MultipleChoiceQuestion | FeedbackQuestion;
 export const quizData = {
     title: "Évaluation JavaScript Full Stack",
     questions: [

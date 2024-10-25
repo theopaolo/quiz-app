@@ -20,6 +20,7 @@ export default function QuizApp() {
   const [answers, setAnswers] = useState<(AnswerResult | null)[]>(
     new Array(quizData.questions.length).fill(null)
   );
+  const [feedback, setFeedback] = useState('');
 
   const cardStyle: React.CSSProperties = {
     maxHeight: '90vh',
@@ -41,6 +42,64 @@ export default function QuizApp() {
       setStartTime(new Date());
     }
   };
+
+  const isLastQuestion = currentQuestion === quizData.questions.length - 1;
+  const currentQuestionData = quizData.questions[currentQuestion];
+  const isFeedbackQuestion = currentQuestionData.type === 'feedback';
+
+  const handleFeedbackSubmit = () => {
+    if (feedback.trim().length < (currentQuestionData.type === 'feedback' ? currentQuestionData.minLength || 0 : 0)) {
+      toast({
+        title: "Réponse trop courte",
+        description: "Merci de développer un peu plus votre réponse.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const feedbackResult: AnswerResult = {
+      questionIndex: currentQuestion,
+      question: currentQuestionData.question,
+      selectedAnswer: feedback,
+      correct: true, // La réponse est toujours considérée comme correcte
+      timestamp: new Date().toISOString()
+    };
+
+    const newAnswers = [...answers];
+    newAnswers[currentQuestion] = feedbackResult;
+    setAnswers(newAnswers);
+
+    finishQuiz(newAnswers.filter((a): a is AnswerResult => a !== null));
+  };
+
+  const renderQuestion = () => {
+    if (isFeedbackQuestion) {
+      return (
+        <div className="space-y-4">
+          <p className="text-lg font-medium">
+            {currentQuestionData.question}
+          </p>
+          <Textarea
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            placeholder="Partagez votre expérience..."
+            className="min-h-[200px]"
+          />
+          <div className="text-sm text-gray-500">
+            {feedback.length} caractères
+            {currentQuestionData.minLength && ` (minimum ${currentQuestionData.minLength})`}
+          </div>
+          <Button
+            onClick={handleFeedbackSubmit}
+            className="w-full mt-4"
+            disabled={feedback.trim().length < (currentQuestionData.minLength || 0)}
+          >
+            Terminer le quiz
+          </Button>
+        </div>
+      );
+    }
+
 
   const handleAnswerSelect = (isCorrect: boolean, answerText: string) => {
     const newAnswer: AnswerResult = {
