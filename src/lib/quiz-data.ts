@@ -74,39 +74,12 @@ export const quizData = {
         ]
       },
       {
-        question: "Comment fonctionne l'opérateur de coalescence nulle (`??`) ?",
-        answers: [
-          { text: "Comme l'opérateur OR (`||`)", isCorrect: false },
-          { text: "Retourne la partie droite uniquement si la partie gauche est null ou undefined", isCorrect: true },
-          { text: "Vérifie si une valeur est nulle", isCorrect: false },
-          { text: "Compare deux valeurs", isCorrect: false }
-        ]
-      },
-      {
-        question: "Quelle est la différence entre `Object.freeze()` et `const` ?",
-        answers: [
-          { text: "Il n'y en a pas", isCorrect: false },
-          { text: "`const` est plus restrictif", isCorrect: false },
-          { text: "`Object.freeze()` empêche la modification des propriétés, `const` empêche la réassignation", isCorrect: true },
-          { text: "`Object.freeze()` ne fonctionne qu'avec les tableaux", isCorrect: false }
-        ]
-      },
-      {
         question: "Que fait la méthode `Object.entries()` ?",
         answers: [
           { text: "Retourne un tableau des clés", isCorrect: false },
           { text: "Retourne un tableau des valeurs", isCorrect: false },
           { text: "Retourne un tableau de paires clé-valeur", isCorrect: true },
           { text: "Crée un nouvel objet", isCorrect: false }
-        ]
-      },
-      {
-        question: "Comment fonctionne le chaînage optionnel (`?.`) ?",
-        answers: [
-          { text: "Vérifie si une propriété existe", isCorrect: false },
-          { text: "Permet d'accéder aux propriétés imbriquées sans erreur si une propriété est null/undefined", isCorrect: true },
-          { text: "Crée une propriété si elle n'existe pas", isCorrect: false },
-          { text: "Compare des objets", isCorrect: false }
         ]
       },
       {
@@ -257,15 +230,6 @@ export const quizData = {
           { text: "Le mécanisme qui gère les opérations asynchrones", isCorrect: true },
           { text: "Un système de gestion d'événements DOM", isCorrect: false },
           { text: "Un type de boucle while", isCorrect: false }
-        ]
-      },
-      {
-        question: "Quelle est la différence entre `process.nextTick()` et `setImmediate()` ?",
-        answers: [
-          { text: "Il n'y en a pas", isCorrect: false },
-          { text: "process.nextTick() s'exécute avant la prochaine itération de l'event loop", isCorrect: true },
-          { text: "setImmediate() est plus rapide", isCorrect: false },
-          { text: "process.nextTick() est déprécié", isCorrect: false }
         ]
       },
       {
