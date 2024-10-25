@@ -1,12 +1,25 @@
+// src/lib/supabase.ts
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+  throw new Error('Missing env.NEXT_PUBLIC_SUPABASE_URL')
+}
 
-export const supabase = createClient(supabaseUrl, supabaseKey)
+if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  throw new Error('Missing env.NEXT_PUBLIC_SUPABASE_ANON_KEY')
+}
 
-// Types pour TypeScript
-export interface QuizResult {
+export const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  {
+    auth: {
+      persistSession: false // Désactive la persistence de session pour les API routes
+    }
+  }
+)
+
+export type QuizResult = {
   id?: number
   student_name: string
   date: string
@@ -14,6 +27,6 @@ export interface QuizResult {
   score: number
   total_questions: number
   percentage_score: number
-  answers: any
+  answers: any[]
   created_at?: string
 }
