@@ -7,9 +7,19 @@ import { Progress } from '@/components/ui/progress';
 import { AlertCircle, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useToast } from "@/hooks/use-toast";
-import { quizData, type QuizResult, type AnswerResult } from '@/lib/quiz-data';
+import { functionsQuizData, type QuizResult, type AnswerResult, type QuizQuestion } from '@/lib/functions-quiz';
+import { QuestionRenderer } from './QuestionRenderer';
 
-export default function QuizApp() {
+interface QuizData {
+  title: string;
+  questions: QuizQuestion[];
+}
+
+interface QuizAppProps {
+  quizData?: QuizData;
+}
+
+export default function QuizApp({ quizData = functionsQuizData }: QuizAppProps) {
   const { toast } = useToast();
   const [studentName, setStudentName] = useState('');
   const [showNameInput, setShowNameInput] = useState(true);
@@ -188,9 +198,9 @@ export default function QuizApp() {
             <p className="text-sm text-right mb-4">
               Question {currentQuestion + 1} sur {quizData.questions.length}
             </p>
-            <p className="text-lg font-medium">{quizData.questions[currentQuestion].question}</p>
-            <div className="grid gap-2">
-              {quizData.questions[currentQuestion].answers.map((answer, index) => (
+            <QuestionRenderer question={quizData.questions[currentQuestion].question} />
+                          <div className="grid gap-2">
+                {quizData.questions[currentQuestion].answers.map((answer, index) => (
                 <Button
                   key={index}
                   onClick={() => handleAnswerSelect(answer.isCorrect, answer.text)}
