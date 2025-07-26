@@ -197,7 +197,7 @@ export default function QuizApp() {
                   variant={answers[currentQuestion]?.selectedAnswer === answer.text ? 'default' : 'outline'}
                   className="text-left h-auto py-4 px-6 break-words"
                 >
-                  {answer.text}
+                  <p>{answer.text}</p>
                 </Button>
               ))}
             </div>
